@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropOne — One-Page Proposals That Win Freelance Clients</title>
+<meta name="description" content="PropOne is a free one-page proposal generator for freelancers. Fill a short form, get a polished client-ready proposal, export to PDF. Pro is $19 once.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="brand-mark">P1</span> PropOne</a>
+    <nav class="nav-links">
+      <a href="#generator">Generator</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#pricing">Unlock Pro — $19</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Free to use · No account · One-time $19 Pro</p>
+    <h1>Turn a discovery call into a <span class="grad">signed proposal</span> in 5 minutes.</h1>
+    <p class="sub">PropOne is a one-page proposal generator for freelancers. Fill a short form, watch a polished client-ready proposal build itself live, export to PDF. No subscriptions, no signup, your data never leaves your browser.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary btn-lg" href="#generator">Build my proposal free</a>
+      <a class="btn btn-ghost btn-lg" href="#pricing">See pricing</a>
+    </div>
+    <div class="hero-proof">
+      <div><strong>1</strong><span>page. That's the whole format.</span></div>
+      <div><strong>0</strong><span>accounts, servers, or tracking.</span></div>
+      <div><strong>$19</strong><span>one time. Never a subscription.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="generator" class="app-section">
+  <div class="app-wrap">
+    <h2>Build your proposal</h2>
+    <p class="section-sub">Everything updates live on the right. When it looks right, hit <strong>Export PDF</strong>.</p>
+
+    <div class="app-grid">
+      <form id="propForm" class="panel form-panel" onsubmit="return false">
+
+        <h3>You</h3>
+        <div class="row2">
+          <label>Your name<input id="fName" type="text" placeholder="Alex Rivera" autocomplete="off"></label>
+          <label>Title / role<input id="fTitle" type="text" placeholder="Freelance Web Developer" autocomplete="off"></label>
+        </div>
+        <label>Email<input id="fEmail" type="email" placeholder="you@example.com" autocomplete="off"></label>
+
+        <h3>The client &amp; the project</h3>
+        <div class="row2">
+          <label>Client name<input id="fClient" type="text" placeholder="Acme Co." autocomplete="off"></label>
+          <label>Project title<input id="fProject" type="text" placeholder="Marketing site rebuild" autocomplete="off"></label>
+        </div>
+        <label>Their problem (1–2 lines)<textarea id="fProblem" rows="2" placeholder="Their current site is slow and hasn't been updated in 3 years — they're losing demo requests to faster competitors."></textarea></label>
+        <label>Your solution (1–2 lines)<textarea id="fSolution" rows="2" placeholder="A fast, modern rebuild focused on one job: turning visitors into demo requests. Launch-ready in 4 weeks."></textarea></label>
+
+        <h3>Deliverables</h3>
+        <div id="deliverableRows">
+          <div class="drow"><input class="dDesc" type="text" placeholder="Deliverable 1 — e.g. Homepage + 5 pages rebuilt"><input class="dPrice" type="number" min="0" step="1" placeholder="$"></div>
+          <div class="drow"><input class="dDesc" type="text" placeholder="Deliverable 2 — e.g. Copy rewrite for conversion"><input class="dPrice" type="number" min="0" step="1" placeholder="$"></div>
+          <div class="drow"><input class="dDesc" type="text" placeholder="Deliverable 3 — e.g. Speed optimization, 90+ score"><input class="dPrice" type="number" min="0" step="1" placeholder="$"></div>
+        </div>
+
+        <h3>Terms</h3>
+        <div class="row2">
+          <label>Timeline (weeks)<input id="fWeeks" type="number" min="1" step="1" value="4"></label>
+          <label>Payment terms
+            <select id="fTerms">
+              <option>50% upfront, 50% on delivery</option>
+              <option>100% upfront</option>
+              <option>Milestones: 30 / 40 / 30</option>
+              <option>Net 14 after delivery</option>
+            </select>
+          </label>
+        </div>
+        <div class="row2">
+          <label>Valid for (days)<input id="fValid" type="number" min="1" step="1" value="14"></label>
+          <label>Brand color<input id="fColor" type="color" value="#6c3df5"></label>
+        </div>
+        <label>Theme
+          <select id="fTheme">
+            <option value="violet">Violet (free)</option>
+            <option value="ink">Ink (free)</option>
+            <option value="emerald" data-pro="1">Emerald — Pro</option>
+            <option value="crimson" data-pro="1">Crimson — Pro</option>
+            <option value="gold" data-pro="1">Gold — Pro</option>
+          </select>
+        </label>
+        <p class="pro-hint" id="proHint">Pro themes are locked. <a href="#pricing">Unlock PropOne Pro — $19 one time</a></p>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="button" id="btnPrint">Export / Print PDF</button>
+          <button class="btn btn-ghost" type="button" id="btnClear">Clear</button>
+        </div>
+        <p class="tiny-note">Your data stays in this browser. Nothing is uploaded anywhere.</p>
+      </form>
+
+      <div class="panel preview-panel">
+        <div class="preview-toolbar">
+          <span class="preview-label">Live preview — one page</span>
+          <span class="badge" id="tierBadge">FREE</span>
+        </div>
+        <div id="paper" class="paper theme-violet">
+          <div class="paper-head">
+            <div>
+              <div class="p-client" id="pClient">Your Client</div>
+              <div class="p-project" id="pProject">Project Title</div>
+            </div>
+            <div class="p-from">
+              <div class="p-name" id="pName">Your Name</div>
+              <div class="p-title" id="pTitle">Freelancer</div>
+              <div class="p-email" id="pEmail">you@example.com</div>
+            </div>
+          </div>
+          <div class="p-section"><div class="p-label">The problem</div><p id="pProblem">…</p></div>
+          <div class="p-section"><div class="p-label">The solution</div><p id="pSolution">…</p></div>
+          <div class="p-section">
+            <div class="p-label">Deliverables</div>
+            <div id="pDelivs"></div>
+          </div>
+          <div class="p-total">
+            <div><span>Investment</span><strong id="pTotal">$0</strong></div>
+            <div><span>Timeline</span><strong id="pWeeks">4 weeks</strong></div>
+            <div><span>Valid until</span><strong id="pValid">—</strong></div>
+          </div>
+          <div class="p-terms"><span class="p-label">Payment</span><p id="pTerms">50% upfront, 50% on delivery</p></div>
+          <div class="p-cta" id="pCta">To accept, reply <strong>“YES”</strong> to this proposal.</div>
+          <div class="p-foot">
+            <span id="pDate"></span>
+            <span class="p-watermark" id="pWatermark">Made with PropOne · propones free</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing-section">
+  <div class="pricing-wrap">
+    <h2>Simple pricing</h2>
+    <p class="section-sub">Free forever for the basics. One payment if you want it polished.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <ul>
+          <li>Full proposal generator</li>
+          <li>Live one-page preview</li>
+          <li>PDF export</li>
+          <li>2 clean themes</li>
+          <li>Small “Made with PropOne” footer on exports</li>
+        </ul>
+        <a class="btn btn-ghost" href="#generator">Start free</a>
+      </div>
+      <div class="card featured">
+        <div class="pop">Most popular</div>
+        <h3>Pro</h3>
+        <div class="price">$19 <span>one time</span></div>
+        <ul>
+          <li>Everything in Free</li>
+          <li><strong>Watermark-free</strong> PDF exports</li>
+          <li>3 premium themes (Emerald, Crimson, Gold)</li>
+          <li>Draft auto-save in your browser</li>
+          <li>Unlock code emailed after payment</li>
+        </ul>
+        <button class="btn btn-primary" id="btnBuy">Get PropOne Pro — $19</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq-section">
+  <div class="faq-wrap">
+    <h2>Questions</h2>
+    <details open><summary>How do I pay?</summary><p>Two ways: PayPal (card or balance) or USDT on BSC/BEP20. Click “Get PropOne Pro”, pick your method, and send the payment with your email in the note so we know where to send the code.</p></details>
+    <details><summary>When do I get my unlock code?</summary><p>We review payments a few times a day and email your personal unlock code — usually within a few hours. Enter it once in the generator and Pro stays unlocked in your browser.</p></details>
+    <details><summary>Is there a subscription?</summary><p>No. Pro is $19 once, forever. We think proposal tools shouldn't be rent.</p></details>
+    <details><summary>Where does my data go?</summary><p>Nowhere. The generator runs entirely in your browser — no account, no server, no tracking. Your client details never leave your machine.</p></details>
+    <details><summary>Refunds?</summary><p>7 days, no questions. Email us and we return the $19.</p></details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span class="brand"><span class="brand-mark">P1</span> PropOne</span>
+    <span>Built by <strong>Chachi</strong> · Questions? <a href="mailto:chachiafk@gmail.com">chachiafk@gmail.com</a></span>
+    <span class="tiny-note">© 2026 PropOne. One page is all it takes.</span>
+  </div>
+</footer>
+
+<!-- Buy modal -->
+<div class="modal-backdrop" id="buyModal" hidden>
+  <div class="modal">
+    <button class="modal-x" id="modalClose" aria-label="Close">×</button>
+    <h3>Get PropOne Pro — $19 one time</h3>
+    <p class="tiny-note">After payment, we email your unlock code (usually within a few hours). Put your email in the payment note.</p>
+    <div class="pay-tabs">
+      <button class="pay-tab active" data-tab="paypal">PayPal</button>
+      <button class="pay-tab" data-tab="usdt">USDT (BSC/BEP20)</button>
+    </div>
+    <div class="pay-pane" id="pane-paypal">
+      <p>Pay <strong>$19 USD</strong> with PayPal:</p>
+      <a class="btn btn-primary btn-block" id="paypalLink" target="_blank" rel="noopener"
+         href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=chachiafk@gmail.com&item_name=PropOne%20Pro%20-%20one-time%20unlock&amount=19.00&currency_code=USD">Pay $19 with PayPal</a>
+      <p class="tiny-note">Opens PayPal checkout. Add your email in the note field.</p>
+    </div>
+    <div class="pay-pane" id="pane-usdt" hidden>
+      <p>Send <strong>19 USDT</strong> (BSC / BEP20 network) to:</p>
+      <div class="addr-row">
+        <code id="usdtAddr">0xb2a38e074808f0c0d4ee9c13f5894c6c601fb172</code>
+        <button class="btn btn-ghost btn-sm" id="btnCopy">Copy</button>
+      </div>
+      <p class="tiny-note">BSC/BEP20 network only. Include your email in the memo if your wallet supports it, or email us the tx hash.</p>
+    </div>
+    <div class="unlock-row">
+      <label>Have a code? Enter it:<input id="unlockInput" type="text" placeholder="P1-XXXX-XXXX" autocomplete="off" spellcheck="false"></label>
+      <button class="btn btn-primary btn-sm" id="btnUnlock">Unlock</button>
+    </div>
+    <p class="tiny-note" id="unlockMsg"></p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
