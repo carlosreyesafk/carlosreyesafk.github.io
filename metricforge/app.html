@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetricForge Suite — 10 SaaS Calculators + Simulator</title>
+<meta name="description" content="Free SaaS unit economics calculators: churn, LTV, CAC, NRR, Quick Ratio, Magic Number, Rule of 40, runway. No signup.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">◈</span> MetricForge</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#simulator">Simulator</a>
+      <a href="#scorecard">Scorecard</a>
+      <button class="btn btn-sm" id="proBtn">Go Pro — $19</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap app-head">
+  <h1>The Suite</h1>
+  <p class="sub">Ten calculators. Every formula shown. Benchmarks labeled as industry rules of thumb. <span id="proState" class="pro-state">Free plan</span></p>
+</div>
+
+<main class="wrap suite">
+
+  <!-- 1. CUSTOMER CHURN -->
+  <section class="calc" id="churn">
+    <h2>Customer Churn Rate</h2>
+    <p class="formula">Churn = Customers lost ÷ Customers at start × 100</p>
+    <div class="fields">
+      <label>Customers at start of period <input type="number" id="c_start" value="500" min="0"></label>
+      <label>Customers lost during period <input type="number" id="c_lost" value="25" min="0"></label>
+      <label>New customers during period <input type="number" id="c_new" value="40" min="0"></label>
+    </div>
+    <div class="result"><span class="r-val" id="c_out">–</span><span class="r-badge" id="c_badge"></span></div>
+    <p class="insight" id="c_insight"></p>
+    <p class="bench-note">Benchmark (SMB SaaS, monthly): &lt;5% excellent · 5–10% typical · &gt;10% serious retention problem. Net growth this period: <strong id="c_net">–</strong></p>
+  </section>
+
+  <!-- 2. REVENUE CHURN + NRR -->
+  <section class="calc" id="revchurn">
+    <h2>Revenue Churn &amp; Net Revenue Retention</h2>
+    <p class="formula">Revenue churn = MRR lost ÷ MRR at start × 100 &nbsp;·&nbsp; NRR = (Start + Expansion − Churned − Contraction) ÷ Start × 100</p>
+    <div class="fields">
+      <label>MRR at start ($) <input type="number" id="r_start" value="50000" min="0"></label>
+      <label>MRR churned ($) <input type="number" id="r_churned" value="2500" min="0"></label>
+      <label>MRR contraction ($) <input type="number" id="r_contract" value="1000" min="0"></label>
+      <label>MRR expansion ($) <input type="number" id="r_expand" value="4000" min="0"></label>
+    </div>
+    <div class="result"><span class="r-val" id="r_out">–</span><span class="r-badge" id="r_badge"></span></div>
+    <p class="insight" id="r_insight"></p>
+    <p class="bench-note">NRR benchmark: ≥110% excellent · 100–110% good · &lt;100% shrinking base. NRR: <strong id="r_nrr">–</strong></p>
+  </section>
+
+  <!-- 3. LTV -->
+  <section class="calc" id="ltv">
+    <h2>Customer Lifetime Value (LTV)</h2>
+    <p class="formula">LTV = (ARPA × Gross margin %) ÷ Monthly churn rate</p>
+    <div class="fields">
+      <label>ARPA — avg revenue / account / mo ($) <input type="number" id="l_arpa" value="99" min="0"></label>
+      <label>Gross margin % <input type="number" id="l_margin" value="80" min="0" max="100"></label>
+      <label>Monthly churn rate % <input type="number" id="l_churn" value="5" min="0.01" step="0.1"></label>
+    </div>
+    <div class="result"><span class="r-val" id="l_out">–</span><span class="r-badge" id="l_badge"></span></div>
+    <p class="insight" id="l_insight"></p>
+    <p class="bench-note">Implied customer lifetime: <strong id="l_life">–</strong> months. Uses the contribution-margin method (correct for unit economics).</p>
+  </section>
+
+  <!-- 4. CAC -->
+  <section class="calc" id="cac">
+    <h2>Customer Acquisition Cost (CAC)</h2>
+    <p class="formula">CAC = Total sales &amp; marketing spend ÷ New customers acquired</p>
+    <div class="fields">
+      <label>S&amp;M spend, fully loaded ($) <input type="number" id="k_spend" value="20000" min="0"></label>
+      <label>New customers acquired <input type="number" id="k_new" value="80" min="1"></label>
+    </div>
+    <div class="result"><span class="r-val" id="k_out">–</span></div>
+    <p class="insight">Fully loaded = salaries, tools, ad spend, content, events — not just ads.</p>
+  </section>
+
+  <!-- 5. LTV:CAC -->
+  <section class="calc" id="ltvcac">
+    <h2>LTV : CAC Ratio</h2>
+    <p class="formula">LTV:CAC = LTV ÷ CAC — uses your LTV and CAC inputs above</p>
+    <div class="result"><span class="r-val" id="lc_out">–</span><span class="r-badge" id="lc_badge"></span></div>
+    <p class="insight" id="lc_insight"></p>
+    <p class="bench-note">Benchmark: ≥3 healthy (invest more) · 1–3 fix before scaling · &lt;1 losing money on every customer.</p>
+  </section>
+
+  <!-- 6. CAC PAYBACK -->
+  <section class="calc" id="payback">
+    <h2>CAC Payback Period</h2>
+    <p class="formula">Payback (months) = CAC ÷ (ARPA × Gross margin %)</p>
+    <div class="result"><span class="r-val" id="p_out">–</span><span class="r-badge" id="p_badge"></span></div>
+    <p class="insight" id="p_insight"></p>
+    <p class="bench-note">Benchmark: ≤12 mo good · 12–18 acceptable for higher ACV · &gt;24 dangerous. Uses ARPA, margin, CAC from your inputs above.</p>
+  </section>
+
+  <!-- 7. QUICK RATIO -->
+  <section class="calc" id="quick">
+    <h2>Quick Ratio</h2>
+    <p class="formula">Quick Ratio = (New MRR + Expansion MRR) ÷ (Churned MRR + Contraction MRR)</p>
+    <div class="fields">
+      <label>New MRR ($) <input type="number" id="q_new" value="8000" min="0"></label>
+      <label>Expansion MRR ($) <input type="number" id="q_exp" value="4000" min="0"></label>
+      <label>Churned MRR ($) <input type="number" id="q_chu" value="2500" min="0"></label>
+      <label>Contraction MRR ($) <input type="number" id="q_con" value="1000" min="0"></label>
+    </div>
+    <div class="result"><span class="r-val" id="q_out">–</span><span class="r-badge" id="q_badge"></span></div>
+    <p class="insight" id="q_insight"></p>
+    <p class="bench-note">Benchmark: ≥4 excellent · 2–4 healthy · &lt;2 growth is being eaten by churn · &lt;1 shrinking.</p>
+  </section>
+
+  <!-- 8. MAGIC NUMBER -->
+  <section class="calc" id="magic">
+    <h2>Magic Number</h2>
+    <p class="formula">Magic Number = Net New ARR (this quarter) ÷ S&amp;M spend (prior quarter)</p>
+    <div class="fields">
+      <label>Net New ARR this quarter ($) <input type="number" id="m_arr" value="120000" min="0"></label>
+      <label>S&amp;M spend prior quarter ($) <input type="number" id="m_spend" value="100000" min="1"></label>
+    </div>
+    <div class="result"><span class="r-val" id="m_out">–</span><span class="r-badge" id="m_badge"></span></div>
+    <p class="insight" id="m_insight"></p>
+    <p class="bench-note">Benchmark: ≥1.0 efficient growth (invest more) · 0.5–1.0 moderate · &lt;0.5 inefficient — fix GTM before spending.</p>
+  </section>
+
+  <!-- 9. RULE OF 40 -->
+  <section class="calc" id="rule40">
+    <h2>Rule of 40</h2>
+    <p class="formula">Rule of 40 = Revenue growth % + Profit margin %</p>
+    <div class="fields">
+      <label>YoY revenue growth % <input type="number" id="f_growth" value="60" step="1"></label>
+      <label>Profit margin % (can be negative) <input type="number" id="f_margin" value="-15" step="1"></label>
+    </div>
+    <div class="result"><span class="r-val" id="f_out">–</span><span class="r-badge" id="f_badge"></span></div>
+    <p class="insight" id="f_insight"></p>
+    <p class="bench-note">Benchmark: ≥40% healthy SaaS · 0–40% acceptable at scale · &lt;0% unsustainable.</p>
+  </section>
+
+  <!-- 10. RUNWAY -->
+  <section class="calc" id="runway">
+    <h2>Runway</h2>
+    <p class="formula">Runway (months) = Cash on hand ÷ Net monthly burn</p>
+    <div class="fields">
+      <label>Cash on hand ($) <input type="number" id="w_cash" value="500000" min="0"></label>
+      <label>Net monthly burn ($) <input type="number" id="w_burn" value="40000" min="1"></label>
+    </div>
+    <div class="result"><span class="r-val" id="w_out">–</span><span class="r-badge" id="w_badge"></span></div>
+    <p class="insight" id="w_insight"></p>
+    <p class="bench-note">Benchmark: ≥18 mo comfortable · 12–18 fine · &lt;12 raise or cut · &lt;6 critical. Out-of-money date: <strong id="w_date">–</strong></p>
+  </section>
+
+  <!-- SIMULATOR (PRO) -->
+  <section class="calc pro-locked" id="simulator">
+    <div class="pro-tag">PRO</div>
+    <h2>12-Month Scenario Simulator</h2>
+    <p class="formula">Projects MRR month-by-month from your growth and churn assumptions.</p>
+    <div class="fields">
+      <label>Starting MRR ($) <input type="number" id="s_mrr" value="50000" min="0"></label>
+      <label>Monthly new-MRR growth % <input type="number" id="s_growth" value="8" step="0.5"></label>
+      <label>Monthly revenue churn % <input type="number" id="s_churn" value="4" step="0.5"></label>
+    </div>
+    <canvas id="simChart" width="900" height="320"></canvas>
+    <div class="sim-stats">
+      <div><span>MRR month 12</span><strong id="s_m12">–</strong></div>
+      <div><span>Total ARR run-rate</span><strong id="s_arr">–</strong></div>
+      <div><span>Cumulative new MRR</span><strong id="s_cum">–</strong></div>
+    </div>
+    <div class="lock-overlay" id="simLock">
+      <p>🔒 The simulator is a <strong>Pro</strong> feature.</p>
+      <button class="btn" data-open-pro>Unlock Pro — $19 one-time</button>
+    </div>
+  </section>
+
+  <!-- SCORECARD (PRO) -->
+  <section class="calc pro-locked" id="scorecard">
+    <div class="pro-tag">PRO</div>
+    <h2>Investor Scorecard</h2>
+    <p class="formula">One page. All your metrics, rated. Export to PDF for board updates and fundraising.</p>
+    <div id="scorecardBody">
+      <table class="score-table">
+        <thead><tr><th>Metric</th><th>Your value</th><th>Rating</th></tr></thead>
+        <tbody id="scoreRows"></tbody>
+      </table>
+      <div class="score-verdict" id="scoreVerdict"></div>
+      <div class="btn-row">
+        <button class="btn" id="printBtn">🖨 Download / Print PDF</button>
+      </div>
+    </div>
+    <div class="lock-overlay" id="scoreLock">
+      <p>🔒 The Investor Scorecard is a <strong>Pro</strong> feature.</p>
+      <button class="btn" data-open-pro>Unlock Pro — $19 one-time</button>
+    </div>
+  </section>
+
+  <!-- PRO / PAYWALL -->
+  <section class="calc" id="pro">
+    <h2>MetricForge Pro — $19 <span class="once">one-time · lifetime</span></h2>
+    <div class="pro-grid">
+      <div>
+        <ul class="pro-list">
+          <li>✓ 12-month scenario simulator with charts</li>
+          <li>✓ Investor Scorecard — one-page PDF export</li>
+          <li>✓ Segment benchmark comparison (SMB / Mid-Market / Enterprise)</li>
+          <li>✓ All 10 calculators free forever, no signup</li>
+        </ul>
+      </div>
+      <div class="paybox">
+        <h3>How to unlock</h3>
+        <ol>
+          <li>Pay <strong>$19</strong> via one of the rails below.</li>
+          <li>Email your receipt to <strong>chachiafk@gmail.com</strong> with subject <strong>METRICFORGE PRO</strong>.</li>
+          <li>Receive your lifetime license code (usually within hours) and enter it here:</li>
+        </ol>
+        <div class="rails">
+          <div class="rail"><strong>PayPal</strong><code>chachiafk@gmail.com</code><span>Send $19 as Friends &amp; Family or Goods</span></div>
+          <div class="rail"><strong>USDT · BSC (BEP-20)</strong><code class="addr">0xb2a38e074808f0c0d4ee9c13f5894c6c601fb172</code><span>⚠ BSC network only — other networks = funds lost</span></div>
+        </div>
+        <div class="license-row">
+          <input type="text" id="licenseInput" placeholder="Enter license code (e.g. MF-XXXX-XXXX)">
+          <button class="btn" id="licenseBtn">Unlock</button>
+        </div>
+        <p class="lic-msg" id="licenseMsg"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- PRO MODAL -->
+<div class="modal-back" id="proModal">
+  <div class="modal">
+    <button class="modal-x" id="proClose">✕</button>
+    <h3>Unlock MetricForge Pro</h3>
+    <p><strong>$19 one-time</strong>, yours forever. Simulator + Investor Scorecard PDF + segment benchmarks.</p>
+    <div class="rails">
+      <div class="rail"><strong>PayPal</strong><code>chachiafk@gmail.com</code></div>
+      <div class="rail"><strong>USDT · BSC (BEP-20)</strong><code class="addr">0xb2a38e074808f0c0d4ee9c13f5894c6c601fb172</code><span>⚠ BSC network only</span></div>
+    </div>
+    <p class="modal-note">Pay, then email your receipt to <strong>chachiafk@gmail.com</strong> (subject: <strong>METRICFORGE PRO</strong>). Your license code arrives within hours — enter it in the <a href="#pro">Pro section</a>.</p>
+    <a class="btn btn-lg" href="#pro" id="proGoPay">I paid — enter my code</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span><span class="brand-mark">◈</span> MetricForge by Chachi</span>
+    <span class="foot-links"><a href="index.html">Home</a> · <a href="mailto:chachiafk@gmail.com">Contact</a></span>
+  </div>
+  <p class="disclaimer wrap">Educational tool. Benchmarks are industry rules of thumb, not financial advice.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
